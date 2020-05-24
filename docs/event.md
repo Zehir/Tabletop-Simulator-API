@@ -33,6 +33,7 @@ onObjectSearchStart([<span class="tag obj"></span>](types.md)&nbsp;obj, [<span c
 onObjectSpawn([<span class="tag obj"></span>](types.md)&nbsp;spawn_object) | Called when any Object is spawned/created. | [<span class="i"></span>](#onobjectspawn)
 onObjectTriggerEffect([<span class="tag obj"></span>](types.md)&nbsp;trigger_object, [<span class="tag int"></span>](types.md)&nbsp;index) | Called whenever the trigger effect of an [AssetBundle](assetbundle.md) is activated. | [<span class="i"></span>](#onobjecttriggereffect)
 onPlayerChangeColor([<span class="tag str"></span>](types.md)&nbsp;player_color) | Called when a player changes color or selects it for the first time. It also returns `"Grey"` if they disconnect. | [<span class="i"></span>](#onplayerchangecolor)
+onPlayerChangeTeam([<span class="tag str"></span>](types.md)&nbsp;player_color, [<span class="tag str"></span>](types.md)&nbsp;team) | Called when a player changes team. | [<span class="i"></span>](#onplayerchangeteam)
 onPlayerConnect([<span class="tag pla"></span>](types.md)&nbsp;person) | Called when a [Player](player.md) connects to a game. | [<span class="i"></span>](#onplayerconnect)
 onPlayerDisconnect([<span class="tag pla"></span>](types.md)&nbsp;person) | Called when a [Player](player.md) disconnects from a game. | [<span class="i"></span>](#onplayerdisconnect)
 onPlayerTurn([<span class="tag str"></span>](types.md)&nbsp;player_color) | Called at the start of a player's turn when using the in-game turn system. | [<span class="i"></span>](#onplayerturn)
@@ -530,6 +531,27 @@ Called when a player changes color or selects it for the first time. It also ret
 ``` Lua
 function onPlayerChangeColor(color)
 	print(color)
+end
+```
+
+
+---
+
+###onPlayerChangeTeam(...)
+
+Called when a player changes team. It also returns `""` if the player don't have team.
+
+!!!info "onPlayerChangeTeam(player_color, team)"
+	* [<span class="tag str"></span>](types.md)&nbsp;**player_color**: [Player Color](player-color.md) of the player who changed team.
+	* [<span class="tag str"></span>](types.md)&nbsp;**team**: The name of the team joined or `""` if the player select "None".
+
+``` Lua
+function onPlayerChangeTeam(player_color, team)
+    if team ~= "" then
+        print(Player[player_color].steam_name .. " has joined team " .. team .. ".")
+    else
+        print(Player[player_color].steam_name .. " has left his team.")
+    end
 end
 ```
 

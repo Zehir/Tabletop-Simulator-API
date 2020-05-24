@@ -1,4 +1,4 @@
-﻿Events are functions which are activated by Tabletop Simulator when something takes place in-game. It is possible to use all of them within scripts on Objects, and most will also work in Global scripts.
+Events are functions which are activated by Tabletop Simulator when something takes place in-game. It is possible to use all of them within scripts on Objects, and most will also work in Global scripts.
 
 Many contain parameters which can be used to utilize additional information related to the event.
 
@@ -21,6 +21,7 @@ onObjectDestroy([<span class="tag obj"></span>](types.md)&nbsp;dying_object) | C
 onObjectDrop([<span class="tag str"></span>](types.md)&nbsp;player_color, [<span class="tag obj"></span>](types.md)&nbsp;dropped_object) | Called whenever any object is dropped by a player. | [<span class="i"></span>](#onobjectdrop)
 onObjectEnterScriptingZone([<span class="tag obj"></span>](types.md)&nbsp;zone, [<span class="tag obj"></span>](types.md)&nbsp;enter_object) | Called when any object enters any scripting zone. | [<span class="i"></span>](#onobjectenterscriptingzone)
 onObjectEnterContainer([<span class="tag obj"></span>](types.md)&nbsp;container, [<span class="tag obj"></span>](types.md)&nbsp;enter_object) | Called when any object enters any container. Includes decks | [<span class="i"></span>](#onobjectentercontainer)
+onObjectHover([<span class="tag str"></span>](types.md)&nbsp;player_color, [<span class="tag obj"></span>](types.md)&nbsp;object) | Called when a player moves their pointer over an object. | [<span class="i"></span>](#onobjecthover)
 onObjectLeaveScriptingZone([<span class="tag obj"></span>](types.md)&nbsp;zone, [<span class="tag obj"></span>](types.md)&nbsp;enter_object) | Called when any object leaves any scripting zone. | [<span class="i"></span>](#onobjectleavescriptingzone)
 onObjectLeaveContainer([<span class="tag obj"></span>](types.md)&nbsp;container, [<span class="tag obj"></span>](types.md)&nbsp;leave_object) | Called when any object leaves any container. | [<span class="i"></span>](#onobjectleavecontainer)
 onObjectLoopingEffect([<span class="tag obj"></span>](types.md)&nbsp;loop_object, [<span class="tag int"></span>](types.md)&nbsp;index) | Called whenever the looping effect of an [AssetBundle](assetbundle.md) is activated. | [<span class="i"></span>](#onobjectloopingeffect)
@@ -62,6 +63,7 @@ onCollisionExit([<span class="tag tab"></span>](types.md)&nbsp;collision_info) |
 onCollisionStay([<span class="tag tab"></span>](types.md)&nbsp;collision_info) | Called **every frame** that an Object is colliding with the Object this function is on. | [<span class="i"></span>](#oncollisionstay)
 onDestroy() | Called when an Object it is on is destroyed. | [<span class="i"></span>](#ondestroy)
 onDrop([<span class="tag str"></span>](types.md)&nbsp;player_color) | Called when a player releases an Object after picking it up. | [<span class="i"></span>](#ondrop)
+onHover([<span class="tag str"></span>](types.md)&nbsp;player_color) | Called when a player moves their pointer over this Object. | [<span class="i"></span>](#onhover)
 onPageChange() | Called when a Custom PDF page is changed. | [<span class="i"></span>](#onpagechange)
 onPeek([<span class="tag str"></span>](types.md)&nbsp;player) | Called when a player using peek to look under this Object. | [<span class="i"></span>](#onpeek)
 onPickUp([<span class="tag str"></span>](types.md)&nbsp;player_color) | Called when a player picks up an Object. | [<span class="i"></span>](#onpickup)
@@ -340,6 +342,25 @@ end
 ---
 
 
+###onObjectHover(...)
+
+Called when a player moves their pointer over an object.
+
+!!!info "onObjectHover(player_color, object)"
+	* [<span class="tag str"></span>](types.md)&nbsp;**player_color**: [Player Color](player-color.md) of the Player who picked up the object.
+	* [<span class="tag obj"></span>](types.md)&nbsp;**object**: The Object in game which the cursor is onto or `nil` if the player moved the cursor away.
+
+``` Lua
+function onObjectHover(player_color, object)
+    if object ~= nil then
+        print(Player[player_color].steam_name .. " put his cursor on " .. object.getName() .. ".")
+    else
+        print(Player[player_color].steam_name .. " removed his cursor from onto an object.")
+    end
+end
+```
+
+---
 
 ###onObjectLeaveScriptingZone(...)
 
@@ -787,6 +808,21 @@ This function is called when this [Object](object.md) is dropped. Does not work 
 ``` Lua
 function onDrop(color)
 	print(color)
+end
+```
+
+---
+
+###onHover(...)
+
+Called when a player moves their pointer over this [Object](object.md).
+
+!!!info "onHover(player_color)"
+	* [<span class="tag str"></span>](types.md)&nbsp;**player_color**: [Player Color](player-color.md) of the Player.
+
+``` Lua
+function onHover(player_color)
+    print(Player[player_color].steam_name .. " put his cursor on " .. self.getName() .. ".")
 end
 ```
 
